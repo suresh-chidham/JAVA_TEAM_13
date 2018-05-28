@@ -1,0 +1,31 @@
+import pandas as pd
+import numpy as np
+import matplotlib as plt
+from matplotlib import style
+style.use("ggplot")
+from sklearn.cluster import KMeans
+import csv
+
+df = pd.read_csv("C:/Users/sc4/Inurance_Prediction/train.csv", header=None,', parse_dates=[0, 1],date_parser=lambda x: dt.datetime.strptime(x, '%d/%m/%Y')) #Reading the dataset in a dataframe using Pandas
+df['discharge_date_diff'] = df['Member Admission Date'] - df['Member Discharge Date']
+df.head(70)
+bydeceaseCode =df.groupby('DECEASE_CODE')
+
+df['sort_discharge_date_diff']=bydeceaseCode .sort_values(by='discharge_date_diff')
+
+centroids = {
+    i+1: [np.random.randint(0, df['sort_discharge_date_diff'].rows), np.random.randint(0, df['sort_discharge_date_diff'].rows)]
+    for i in range(k)
+}
+
+fig = plt.figure(figsize=(5, 5))
+plt.scatter(df['x'], df['y'], color='k')
+colmap = {1: 'r', 2: 'g', 3: 'b'}
+for i in centroids.keys():
+    plt.scatter(*centroids[i], color=colmap[i])
+plt.xlim(0, 80)
+plt.ylim(0, 80)
+plt.show()
+
+
+
